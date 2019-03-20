@@ -42,6 +42,9 @@
 
 const char * const currentMeterSourceNames[CURRENT_METER_COUNT] = {
     "NONE", "ADC", "VIRTUAL", "ESC", "MSP"
+#ifdef USE_SERIALSHOT
+    ,"SERIALSHOT"
+#endif        
 };
 
 const uint8_t currentMeterIds[] = {

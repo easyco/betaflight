@@ -259,6 +259,9 @@ static const char * const lookupTablePwmProtocol[] = {
 #ifdef USE_DSHOT
     "DSHOT150", "DSHOT300", "DSHOT600", "DSHOT1200", "PROSHOT1000"
 #endif
+#ifdef USE_SERIALSHOT
+    ,"SERIALSHOT"
+#endif
 };
 
 static const char * const lookupTableRcInterpolation[] = {

@@ -83,6 +83,9 @@ typedef enum {
     PWM_TYPE_DSHOT1200,
     PWM_TYPE_PROSHOT1000,
 #endif
+#ifdef USE_SERIALSHOT
+    PWM_TYPE_SERIALSHOT,
+#endif
     PWM_TYPE_MAX
 } motorPwmProtocolTypes_e;
 

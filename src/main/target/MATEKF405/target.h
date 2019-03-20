@@ -30,8 +30,11 @@
 #define BEEPER_PIN              PC13
 #define BEEPER_INVERTED
 
-#define ENABLE_DSHOT_DMAR       true
+#define USE_SERIALSHOT
 
+#ifndef USE_SERIALSHOT
+#define ENABLE_DSHOT_DMAR       true
+#endif
 // *************** Gyro & ACC **********************
 #define USE_SPI
 #define USE_SPI_DEVICE_1
@@ -155,6 +158,9 @@
 #define SERIALRX_PROVIDER       SERIALRX_SBUS
 #define SERIALRX_UART           SERIAL_PORT_USART2
 
+#ifdef USE_SERIALSHOT
+#define SERIALSHOT_UART         SERIAL_PORT_USART1
+#endif
 // *************** ADC *****************************
 #define USE_ADC
 #define ADC1_DMA_STREAM         DMA2_Stream0

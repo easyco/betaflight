@@ -43,6 +43,9 @@
 
 #include "sensors/battery.h"
 
+#ifdef USE_SERIALSHOT
+#include "io/serial_shot.h"
+#endif
 /**
  * terminology: meter vs sensors
  *
@@ -134,7 +137,13 @@ void batteryUpdateVoltage(timeUs_t currentTimeUs)
             voltageMeterADCRefresh();
             voltageMeterADCRead(VOLTAGE_SENSOR_ADC_VBAT, &voltageMeter);
             break;
-
+#ifdef USE_SERIALSHOT
+        case VOLTAGE_METER_SERIALSHOT:
+            voltageMeter.filtered = serialShotGetVoltage();
+            voltageMeter.unfiltered = voltageMeter.filtered;
+            serialShotMeterReset();
+            break;
+#endif
         default:
         case VOLTAGE_METER_NONE:
             voltageMeterReset(&voltageMeter);
@@ -429,6 +438,14 @@ void batteryUpdateCurrentMeter(timeUs_t currentTimeUs)
             currentMeterMSPRead(&currentMeter);
 #endif
             break;
+
+#ifdef USE_SERIALSHOT
+        case CURRENT_METER_SERIALSHOT:
+            currentMeter.amperage = serialShotGetCurrent();
+            currentMeter.amperageLatest = currentMeter.amperage;
+            currentMeter.mAhDrawn = serialShotGetConsumption();
+            break;
+#endif
 
         default:
         case CURRENT_METER_NONE:

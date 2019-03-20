@@ -1,0 +1,1088 @@
+[33mcommit 13a4561cf3a5c550675cc7011bf7a0c634671e75[m
+Author: Tony Cabello <tcabello@blitsoftware.com>
+Date:   Sun Nov 18 12:58:06 2018 +0100
+
+    Motor diag showing low positions on idle
+
+[33mcommit b5cb1bf65aa8a58e4deff08a4e6630a9229cfb0d[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Sat Nov 10 15:28:10 2018 -0500
+
+    Add osd_ah_invert to allow reversing the direction of the OSD artificial horizon
+
+[33mcommit b58e8f827f52e914e0dea13aec2a781b9d89a1c0[m
+Merge: 3cbf8ae 38c940c
+Author: Michael Keller <github@ike.ch>
+Date:   Sat Nov 10 20:00:10 2018 +1300
+
+    Merge pull request #7056 from etracer65/fix_osd_warning_blinking
+    
+    Improve behavior of OSD warnings element blinking
+
+[33mcommit 7abe51303f4b0f7296d7330b0509482c16e5193a[m
+Author: Tony Cabello <tcabello@blitsoftware.com>
+Date:   Sun Nov 4 07:27:55 2018 +0100
+
+    Total distance flown added to OSD and Stats
+
+[33mcommit 38c940c11e2294b6d9a92ac6e1cec29677ad534a[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Wed Nov 7 18:35:32 2018 -0500
+
+    Improve behavior of OSD warnings element blinking
+    Previously the logic to blink the warnings element was based on whether batteryState was either BATTERY_WARNING or BATTERY_CRITICAL. The problem is that the warning element might be displaying a higher priority message that shouldn't blink.
+    
+    Changes the logic to have the blinking based on the actual warning message displayed.
+    
+    In addition to the battery warning/critical cases, added blinking for some other critical warnings like failsafe, CPU core temp warning, ESC sensor warnings, HEADFREE mode active, and RC smoothing not initialized.
+
+[33mcommit 98641cde75944679ca26fd6e754b9f4c38b85e4c[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Sun Nov 4 09:38:36 2018 -0500
+
+    Suppress OSD stats if disarming from crash-flip or untriggered launch control
+    The OSD stats provide no meaningful information and are just an annoyance when exiting these special states.
+    
+    For Launch Control the stats will be displayed if the launch is triggered and normal flight occurrred.
+
+[33mcommit 79fd505a8c75dad30fcf9f60ab0712238b6184a7[m
+Author: mikeller <github@ike.ch>
+Date:   Sun Nov 4 13:37:39 2018 +1300
+
+    Changed warning to only be shown when armed.
+
+[33mcommit 286f21150c702195bdb34d4251a2b9eaf4e2d4b5[m
+Author: mikeller <github@ike.ch>
+Date:   Sat Nov 3 17:37:18 2018 +1300
+
+    Unified warning activation conditions.
+
+[33mcommit 99eab9220000d9dbe387e1c8d870ea781ebad71a[m
+Author: mikeller <github@ike.ch>
+Date:   Fri Nov 2 01:48:06 2018 +1300
+
+    Added 'crash flip active' to the list of warnings to be shown on LED_STRIP.
+
+[33mcommit c0344496ca276926b016ed991647e24acf7c74fe[m
+Merge: f4dbbac b723d29
+Author: Michael Keller <github@ike.ch>
+Date:   Fri Nov 2 00:49:42 2018 +1300
+
+    Merge pull request #6992 from etracer65/launch_control
+    
+    Launch Control
+
+[33mcommit ace5017cc83ef7c4552f59427bb8309c963ecb1e[m
+Merge: 50df255 9b9a86e
+Author: Michael Keller <github@ike.ch>
+Date:   Thu Nov 1 22:24:20 2018 +1300
+
+    Merge pull request #6480 from pulquero/osd_frame_errors_3_5
+    
+    Added frame quality to OSD.
+
+[33mcommit 9b9a86e4c5809e05510c458efd2e8ee6815a8598[m
+Author: Mark Hale <mark.hale@physics.org>
+Date:   Sun Jul 29 15:03:00 2018 +0100
+
+    Added rx link quality indicator (based on rx frame error rate) to OSD.
+
+[33mcommit 9656dbba400202afe6eee0e34eb1f2d070e98c03[m
+Merge: 3d2d5a2 0e7a4d6
+Author: Maciej Janowski <maciej.janowski@gmail.com>
+Date:   Mon Oct 29 21:16:24 2018 +0100
+
+    Merge branch 'master' of https://github.com/betaflight/betaflight into motor-diag
+    
+    # Conflicts:
+    #	src/main/io/osd.c
+    #	src/main/io/osd.h
+    #	src/test/unit/osd_unittest.cc
+
+[33mcommit 3d2d5a2efaff57b98b4b415fe2fc2fb73628af48[m
+Author: Maciej Janowski <maciej.janowski@affecto.com>
+Date:   Wed Jun 13 22:17:00 2018 +0200
+
+    Initial implementation
+    
+    Percentage implementation
+    
+    Settings fix, formatting
+    
+    Add support for different number of motors
+    
+    Optimize and cut superfluous code
+    
+    Hard-add mixer.h
+    
+    Formatting adjustment to fit BF standards, linking error in unittest fix attempt
+    
+    Add stubs and variables for unittests
+    
+    Character based indicators
+    
+    Change output to special characters
+    
+    Fix spacing
+    
+    Update test code, add variable
+    
+    Include changes as per peer review
+
+[33mcommit e4dc93b128b98bcc7c7c806030b46ac15a12f9c6[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Tue Oct 9 19:25:59 2018 -0400
+
+    Launch Control
+    Adds a race start assistance system that allows the pilot to pitch forward and then release the sticks with the quad holding position for the race start.
+
+[33mcommit f912b891b5e119be34e539c72cceebb05cad79f4[m
+Merge: 05f935d feaa082
+Author: Michael Keller <github@ike.ch>
+Date:   Thu Oct 25 00:41:50 2018 +1300
+
+    Merge pull request #6952 from mikeller/improve_airmode_detection
+    
+    Improved handling of airmode detection.
+
+[33mcommit 05f935d38e6e3ca9f3056a98535213c49d1337c6[m
+Merge: 8ae0e92 c1f40b8
+Author: Michael Keller <github@ike.ch>
+Date:   Wed Oct 24 23:47:57 2018 +1300
+
+    Merge pull request #6974 from etracer65/osd_remaining_time_div0
+    
+    Fix OSD time remaining division by zero
+
+[33mcommit 8ae0e929d1d01ca71511fd95389e3196cf7569d2[m
+Merge: 52b876a b31b2d0
+Author: Michael Keller <github@ike.ch>
+Date:   Wed Oct 24 23:47:40 2018 +1300
+
+    Merge pull request #6973 from etracer65/osd_temperature_cleanup
+    
+    OSD temperature display and calculations cleanup
+
+[33mcommit 52b876a2a56091f308e1a3b53a0c1ac692e20f5d[m
+Merge: 9a4a350 a66d6a2
+Author: Michael Keller <github@ike.ch>
+Date:   Wed Oct 24 23:46:22 2018 +1300
+
+    Merge pull request #6970 from etracer65/osd_gforce_fix
+    
+    Improve OSD g-force display and avoid math when not needed
+
+[33mcommit 9a4a3507f2eeb280c00be49e198a40cb64ba7c90[m
+Merge: 673bb23 849024c
+Author: Michael Keller <github@ike.ch>
+Date:   Wed Oct 24 23:43:50 2018 +1300
+
+    Merge pull request #6967 from jflyper/bfdev-fix-add-USE_ESC_SENSOR-conditional-to-OSD-stat-max-ESC-temp
+    
+    OSD: Protect ESC stat max temp by USE_ESC_SENSOR
+
+[33mcommit c1f40b8ebb49ddd617d03ca5875596dab6df8c77[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Tue Oct 23 14:09:44 2018 -0400
+
+    Fix OSD time remaining division by zero
+    If the current sensor wasn't configured (or the mahDrawn was still zero) then there would be a division by zero error in the remaining time OSD element calculation. Rearranged the logic to prevent.
+
+[33mcommit b31b2d0680b03abfd091ea7eca756bce8e2ad91f[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Tue Oct 23 09:17:11 2018 -0400
+
+    OSD temperature display and calculations cleanup
+    Remove unnecessary decidegrees conversions as all temperature providers are in degrees celcius.
+    
+    Fixed rounding for imperial units.
+    
+    Fixed data type error in core temp warning element. Temperature is captured as int16 and can be negative but logic was using uint8 leading to an underflow for negative temperatures and a false alarm triggering.
+
+[33mcommit 810b9dab745d437f04b891c18af8bc306baed34d[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Tue Oct 23 07:26:01 2018 -0400
+
+    Fix OSD artificial horizon division by zero
+    If osd_ah_max_pit was set to zero there would be a divide by zero error in the calculations for the OSD artificial horizon. Using zero for osd_ah_max_pit is a valid use-case to disable the vertical pitch component in the artificial horizon so we can't simply change the parameter range.
+
+[33mcommit a66d6a2fc780bceb463c1b50d46ecd85a8163963[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Mon Oct 22 19:46:51 2018 -0400
+
+    Improve OSD g-force display and avoid math when not needed
+    Previously the g-force element was being display using integer math and truncating the float value. This lead to the g-force displaying 0.9 much of the time. Changed to use rounding to one decimal place.
+    
+    Also avoid the g-force calculation unless the element or post-flight statistic are enabled. This saves unnecessary math including a sqrt().
+
+[33mcommit 817bb2ed8651dc695d8f2c39425cb32792fefd36[m
+Author: mikeller <github@ike.ch>
+Date:   Fri Oct 19 00:20:17 2018 +1300
+
+    Rename 'isAirmodeActive()' to 'airmodeIsEnabled()'.
+
+[33mcommit 849024ce598293fdb18f6515e9e165656a5fbb19[m
+Author: jflyper <shinoda@jaist.ac.jp>
+Date:   Mon Oct 22 04:04:39 2018 +0900
+
+    Protect ESC telemetry features in osd.c by USE_ESC_SENSOR
+
+[33mcommit 1edb5411d91bcfa0032c41d78f167221c808b4cd[m
+Merge: 93c38d0 8205bb7
+Author: Michael Keller <github@ike.ch>
+Date:   Thu Oct 11 02:07:33 2018 +1300
+
+    Merge pull request #6891 from etracer65/arming_disabled_osd_display_improvements
+    
+    Increase priority of arming disabled OSD warnings and cycle through all
+
+[33mcommit 2f1643924e3b2d6436a6254554fe8cb8915bfc00[m
+Merge: cc820d9 88f9168
+Author: Michael Keller <github@ike.ch>
+Date:   Mon Oct 8 01:03:20 2018 +1300
+
+    Merge pull request #6656 from timman2er/add_stat_esc_max_temp_rpm
+    
+    added esc max temp and rpm to OSD
+
+[33mcommit 8205bb74e33999fb14315dfc4a513018a105238a[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Sat Oct 6 11:04:28 2018 -0400
+
+    Increase priority of arming disabled OSD warnings and cycle through all
+    Previously the OSD arming disabled warnings were given a low priority so other warnings like "LOW BATTERY" would obscure the arming arming disabled reason(s). Increased the piority so that arming disabled reasons will always be displayed.
+    
+    Also change the logic to cycle through all arming disable reasons rather than only show the first active flag.
+
+[33mcommit a3fb5cc15659d333b6d9960d30510780f33f0d37[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Wed Oct 3 17:39:59 2018 -0400
+
+    Add HEADFREE indicator to the OSD flight mode and warnings display elements
+    Provide multiple mechanisms to alert the pilot that he is attempting to fly in HEADFREE mode while in FPV - which will likely result in disorientation and loss of control.
+
+[33mcommit 88f91681e7d9e43d774537d1f1fec65643cb0443[m
+Author: timman2er <timgreven@live.nl>
+Date:   Tue Sep 25 03:04:09 2018 +0200
+
+    fix order for OSD display
+
+[33mcommit ef17d7fc31f71dbe31d30ed42952ffd0c77795c2[m
+Author: timman2er <timgreven@live.nl>
+Date:   Thu Sep 20 10:15:00 2018 +0200
+
+    add max esc temp and rpm to osd
+
+[33mcommit ea6c21f1e6324cefe3d2d71df780d115bafc4d1f[m
+Merge: 7e362ac 2e55284
+Author: Michael Keller <github@ike.ch>
+Date:   Tue Sep 18 23:53:09 2018 +1200
+
+    Merge pull request #6447 from bforbort/vario
+    
+    Enable Vario on targets that support barometers
+
+[33mcommit 91dcea80536f43178ac23b3eae8c5672a3eb379e[m
+Author: Kenneth Mitchell <kmitchel46725@gmail.com>
+Date:   Sun Sep 16 19:19:40 2018 -0400
+
+    Relocate G-force calculation.
+
+[33mcommit 1f81011f5e7554a1516981e1a71e7f3c5d36682d[m
+Author: Kenneth Mitchell <kmitchel46725@gmail.com>
+Date:   Thu Sep 13 18:24:55 2018 -0400
+
+    Fix OSD Flip arrow.
+
+[33mcommit 2e552841f14f81add28ee1e42b2db8214c1c3309[m
+Author: Blaine <b.forbort@gmail.com>
+Date:   Mon Jul 30 17:16:05 2018 -0700
+
+    Enables Vario on targets that support barometers
+    
+    OSD and telemetry output of vario data is enabled on F4 and up targets
+    that have
+    USE_BARO defined.  Settings and telem elements are removed from all
+    other targets.
+    
+    F3 targets are not supported to free memory.
+
+[33mcommit fc49f738c9b6a32f922f6d527aaff084402d044f[m
+Author: timman2er <timgreven@live.nl>
+Date:   Mon Aug 27 11:16:03 2018 +0200
+
+    flip arrow turtle mode
+
+[33mcommit 0bce8549eef559b52ab85480c70c954144ea5ff9[m
+Author: mikeller <github@ike.ch>
+Date:   Sun Aug 26 14:07:06 2018 +1200
+
+    Renamed 'fc/fc_' files to remove the double 'fc'.
+
+[33mcommit a02e1dd384e55869c3295a29ea2349229c96b4a1[m
+Merge: c12981f 82268b7
+Author: Michael Keller <github@ike.ch>
+Date:   Thu Aug 23 22:36:48 2018 +1200
+
+    Merge pull request #6610 from jflyper/bfdev-osd-warn-fail-safe
+    
+    Add osd warning for fail safe state.
+
+[33mcommit 4b965a572a39d7c5afaf4b12794600c73815b074[m
+Merge: 73bbf51 40f1fe0
+Author: Michael Keller <github@ike.ch>
+Date:   Thu Aug 23 00:00:16 2018 +1200
+
+    Merge pull request #6254 from mikeller/remove_feature_call
+    
+    Removed calls to (latching) 'feature()'.
+
+[33mcommit 82268b7a4e078f76d6529fba5eb0561d463f0ad9[m
+Author: jflyper <shinoda@jaist.ac.jp>
+Date:   Wed Aug 22 00:44:11 2018 +0900
+
+    Add osd warning for fail safe state.
+
+[33mcommit 53151817e11bf35f17009ce8d4bf08baf01fa0ea[m
+Merge: f463dad e91231a
+Author: Michael Keller <github@ike.ch>
+Date:   Wed Aug 22 18:49:45 2018 +1200
+
+    Merge pull request #6430 from mikeller/remove_duplicate_build_bug_on
+    
+    Removed 'BUILD_BUG_ON'.
+
+[33mcommit 6de1c32d9db2d7b78bf02aac203b1bf3f63cb764[m
+Author: mikeller <github@ike.ch>
+Date:   Tue Jul 10 00:49:17 2018 +1200
+
+    Added shadow copies for CLI and MSP.
+
+[33mcommit c99629bbf13447341dc1bc579b0655064a0932eb[m
+Author: mikeller <github@ike.ch>
+Date:   Sun Jul 1 23:26:12 2018 +1200
+
+    Removed calls to (latching) 'feature()'.
+
+[33mcommit 1d63edf7c5c06e471399e41b22cf318ac74bfac6[m
+Merge: 3ee16bd 00d3f22
+Author: Michael Keller <github@ike.ch>
+Date:   Mon Aug 20 16:40:52 2018 +1200
+
+    Merge pull request #6580 from jflyper/bfdev-fix-osd-flymode-precedence
+    
+    OSD GPS RESCUE has display precedence over other modes except FS
+
+[33mcommit 70ac9423c7bde57302b235b15e882d46d74f9dbe[m
+Author: mikeller <github@ike.ch>
+Date:   Sun Aug 19 01:41:26 2018 +1200
+
+    Unified BUILD_BUG_ON and STATIC_ASSERT into STATIC_ASSERT.
+
+[33mcommit 6e33878af6292822af748e760ed64a3584a6e14f[m
+Author: Kiripolszky Károly <k.kiripolszky@mito.hu>
+Date:   Wed Jun 20 17:57:32 2018 +0200
+
+    remove OSD_LOG_STATUS from unconditionally drawn elements
+
+[33mcommit ada82354702569511326c1bb563e7c846cce4da6[m
+Author: Kiripolszky Károly <k.kiripolszky@mito.hu>
+Date:   Wed Jun 20 11:03:16 2018 +0200
+
+    add trailing comma
+
+[33mcommit c0e2ca3546a3041ccc5cc4b4177cea1366ec4a39[m
+Author: Kiripolszky Károly <k.kiripolszky@mito.hu>
+Date:   Mon Jun 18 14:54:24 2018 +0200
+
+    initial implementation of log status OSD element
+
+[33mcommit 0e52e21524aa5de816f28530c5880af853338379[m
+Author: AirBreak69 <26233861+AirBreak69@users.noreply.github.com>
+Date:   Sun Jun 24 12:52:22 2018 +0200
+
+    GPS altitude: cleanup all occurancies to assume source is in cm per lsb resolution
+    
+    Harmonized (and partly corrected) all occurancies of gpsSol.llh.alt and getEstimatedAltitude() to handle altiude sourced in cm resolution.
+    This was introduced by GSP_RESCUE/RTH.
+    Introduced a naming convention that include the unit into the variable/function names:
+    gpsSol.llh.alt -> gpsSol.llh.alt_cm
+    getEstimatedAltitude() -> getEstimatedAltitude_cm()
+
+[33mcommit 00d3f2217a89caeb8048f6ac0fc80fc23a4f4c05[m
+Author: jflyper <shinoda@jaist.ac.jp>
+Date:   Fri Aug 17 23:31:03 2018 +0900
+
+    GPS RESCUE has display precedence over other modes except FS
+
+[33mcommit 45b698935066940cf2ba49b89be743d8d2a88269[m
+Merge: c86818e 24ab7d3
+Author: Michael Keller <github@ike.ch>
+Date:   Fri Aug 17 00:36:27 2018 +1200
+
+    Merge pull request #6536 from leocb/Acc-reciprocal
+    
+    Change divisions by acc_1G to multiply by the reciprocal value
+
+[33mcommit 41ce2c632706938f1a8a291f6e2d895d629d2121[m
+Merge: d4eabba 4b415d5
+Author: Michael Keller <github@ike.ch>
+Date:   Fri Aug 17 00:22:11 2018 +1200
+
+    Merge pull request #6391 from leocb/osd-max-g-force-stat
+    
+    Added Max G-force OSD stat
+
+[33mcommit d4eabba541bd4bf77aa893581dcd157f6eb6f877[m
+Merge: fdb4e20 f14c9cb
+Author: Michael Keller <github@ike.ch>
+Date:   Thu Aug 16 23:57:46 2018 +1200
+
+    Merge pull request #6232 from McGiverGim/add_elements_osd_order_loop
+    
+    Add OSD elements to order loop
+
+[33mcommit 34b0707cb6d0c4eb0fef69915f8e94a611d52d0c[m
+Author: leocb <leobottaro@gmail.com>
+Date:   Thu Aug 9 14:41:05 2018 -0300
+
+    change divisions by acc_1G to multiply by the reciprocal value
+
+[33mcommit 65bff6b7d78ecc1507288b54def0d33477fdc410[m
+Author: Andrey Mironov <diehertz@gmail.com>
+Date:   Tue Jul 24 11:54:37 2018 +0300
+
+    Added a condition for enabling OSD task
+
+[33mcommit 17e76e48f633bd092e2e6e861e6fccd300a33630[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Sun Jun 24 08:49:28 2018 -0400
+
+    PID controller feedforward
+    Restructures the PID controller to decouple feedforward from D.
+    
+    Cleaned up the structure of the PID controller; moved some feature-based enhancements out of the main structure.
+    
+    Feedforward becomes a separate component of the PID controller and there is now:
+    f_pitch
+    f_roll
+    f_yaw
+    
+    The default values of 60 for pitch and roll matches the default setpoint weight used in BF3.4.  Yaw previously had no setpoint weight capability so the default here needs to be discussed.  Currently it's also set to 60 and flight testing seems positive.  Feedforward on yaw adds a lot of value so I don't think we want to default to 0.  Instead we need decide on the default.
+    
+    All occurences of setpoint weight have been replaced by feedforward. "setpoint_relax_ratio" has been renamed to "feedforward_transition".
+    
+    The pidSum now consists of P + I + D + F.
+    
+    D has been added back for yaw (disabled by default with d_yaw = 0). We've found little need for D for normal quads but it may have value for other configurations - particularly tricopters.
+    
+    Updated CMS menus to support adjusting the feedforward for each axis.
+    
+    Changed the default for "rc_interp_ch" to be "RPYT".  Need yaw to be smoothed to support feedforward.
+    
+    Open issues:
+    
+    Needs BFC support
+    - Need to add support for the axis "F" gains.
+    - Remove "setpoint weight" slider.
+    - Rename "D Setpoint transition" to "Feedforward transition"
+    
+    Needs BBE support
+    - Header "setpoint_relaxation_ratio" has been renamed "feedforward_transition"
+    - Header "dterm_setpoint_weight" has been replaced with an array named "feed_forward_weight".
+      example: H feed_forward_weight:65,60,60    (R,P,Y)
+    - PID component "AXISF" has been added for all axes. Should be handled like P, I and D values.
+    - PidSum calculation needs to include F.
+    
+    Needs LUA script support
+    - Support the renamed "setpoint_relax_ratio".
+    - Support for feedforward weight on all 3 axes.
+    
+    Open code issues:
+    - rc_adjustments.c - support for adjusting feedforward weight for all axes. Currently only supporting roll - needs coordination with BFC.
+
+[33mcommit 4c917efa502d1390a40bdaec6f95c67244a0273c[m
+Author: ctzsnooze <chris.thompson@sydney.edu.au>
+Date:   Mon Jul 9 11:35:26 2018 +1000
+
+    Smooth anti gravity
+
+[33mcommit 4b415d54cb0e8509355df656e4806b6e3f9a6adb[m
+Author: leocb <leobottaro@gmail.com>
+Date:   Wed Jul 18 07:56:24 2018 -0300
+
+    code formating
+
+[33mcommit 05e42db90b41ea558f8dbf8bceab1889ecb6ed6c[m
+Author: leocb <leobottaro@gmail.com>
+Date:   Tue Jul 17 11:44:01 2018 -0300
+
+    Added Max G-force OSD stat
+
+[33mcommit e2cf7fc238486e2fd21c2cf148243cc14210338f[m
+Merge: 8607b1c 4def6e3
+Author: Michael Keller <github@ike.ch>
+Date:   Tue Jul 17 18:28:58 2018 +1200
+
+    Merge pull request #6233 from leocb/add-gforce-osd
+    
+    Added G-Force to the OSD
+
+[33mcommit 4def6e32818cb16b016a21a3fee000a9c4647991[m
+Author: leocb <leobottaro@gmail.com>
+Date:   Mon Jul 16 08:59:15 2018 -0300
+
+    Fixed OSD G-force symbol as suggested
+
+[33mcommit c9df378dccdbf157613054f04513640740605dcd[m
+Author: leocb <leobottaro@gmail.com>
+Date:   Mon Jul 16 08:36:02 2018 -0300
+
+    Really fixed OSD G Symbol
+
+[33mcommit d0be9578e32a21fef178980ce64135943a13e25e[m
+Author: leocb <leobottaro@gmail.com>
+Date:   Mon Jul 16 08:10:23 2018 -0300
+
+    Fix G-force unit symbol
+
+[33mcommit f40b5979f46ac9521ab5d42a712de6372b4f5906[m
+Merge: 2d27ce4 b9633eb
+Author: Michael Keller <github@ike.ch>
+Date:   Sun Jul 15 16:15:17 2018 +1200
+
+    Merge pull request #6339 from McGiverGim/fix_osd_warnings_when_esc
+    
+    Fix low priority warnings when ESC sensor enabled
+
+[33mcommit ef4a03507f198a383121069df33d3f60cb71bad6[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Sat Jul 14 21:23:13 2018 -0400
+
+    Adjustments strings for OSD not kept in sync with enumeration causing invalid pointers
+    When the separate rc rates and rc expos for roll/pitch were added the descriptive names were never added to the OSD display strings array. Then later PID audio was added causing the array to be out of sync with the enumerated adjustment types.  This led to a corrupted pointer reference in the OSD display.
+    
+    Also the adjustment display name used for the OSD display was never initialized so the pointer was pointing to random memory.
+    
+    Removed the use of globals and changed to use "getter" functions.
+
+[33mcommit b9633eb59db211a983e82cdbae1499a66d078d18[m
+Author: Miguel Angel Mulero Martinez <migmul@gmail.com>
+Date:   Thu Jul 12 09:16:00 2018 +0200
+
+    Fix low priority warnings when ESC sensor enabled
+
+[33mcommit 83612180fc02bd77ab4332a5088a30a87739ec70[m
+Merge: b2e56de b5e0a82
+Author: Michael Keller <github@ike.ch>
+Date:   Mon Jul 9 22:57:56 2018 +1200
+
+    Merge pull request #6265 from atomgomba/improvement-acro-trainer-osd
+    
+    Add Acro Trainer as flight mode to OSD
+
+[33mcommit 899942621c4e1915b9cfd1f493c718e14202c5bf[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Sat Jul 7 20:22:37 2018 -0400
+
+    Fixes from review
+
+[33mcommit af267864e9414268fe0881280bd88b58d7a51cd2[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Sat Jul 7 18:43:06 2018 -0400
+
+    Add OSD warning and beeper pattern if rc smoothing initialization not complete
+    In the OSD display the warning "RCSMOOTHING".  Also play a beep pattern of 3 short, 1 long that will repeat.
+    
+    If rx rate filter training completes the warning/beeper will stop. The warnings are only active when armed.
+
+[33mcommit b5e0a8285251cee724cf5f2e8d48a587973d2e24[m
+Author: Kiripolszky Károly <k.kiripolszky@mito.hu>
+Date:   Mon Jul 2 15:16:51 2018 +0200
+
+    add Acro Trainer as flight mode to OSD
+
+[33mcommit 9d1e4db800b926a8eb458851a75ad353c88cd85a[m
+Author: jflyper <shinoda@jaist.ac.jp>
+Date:   Mon Jul 2 09:46:54 2018 +0900
+
+    Call flashfsIsSupported instead of flashfsIsReady to check flash chip existence
+
+[33mcommit 7df8075fa37e478a18e23534fc02964b440236c6[m
+Author: leocb <leobottaro@gmail.com>
+Date:   Thu Jun 28 16:15:16 2018 -0300
+
+    OSD G-force Fix unit test; use sqrtf
+
+[33mcommit 51e57199fbb71e3da6b2fa087e665eb184b93155[m
+Author: leocb <leobottaro@gmail.com>
+Date:   Thu Jun 28 12:16:25 2018 -0300
+
+    OSD G-force - Fixes compile errors and optimize math
+
+[33mcommit 0ab2638b31f16aa24c310f6032d8dba211f5b39a[m
+Author: leocb <leobottaro@gmail.com>
+Date:   Thu Jun 28 11:32:37 2018 -0300
+
+    OSD G-force - requested changes
+
+[33mcommit f14c9cb929c1937a91017dd4fb7091033aec2d6f[m
+Author: Miguel Angel Mulero Martinez <migmul@gmail.com>
+Date:   Thu Jun 28 13:02:06 2018 +0200
+
+    Add OSD elements to order loop
+
+[33mcommit e2eca1b7626cde3274764e0235ab1d7c2796149c[m
+Author: leocb <leobottaro@gmail.com>
+Date:   Wed Jun 27 13:56:26 2018 -0300
+
+    Added G-Force to the OSD
+
+[33mcommit a93005c6927191a85d2c986851a97241e1ebfb2f[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Fri Jun 15 00:00:19 2018 -0400
+
+    Clean up duplicate OSD stat reset
+
+[33mcommit c15933fbd63c9bd05253f856dd89e83ac2b7f0b8[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Wed Jun 13 12:05:10 2018 -0400
+
+    Change beacon arming delayed message to use the warning message
+    Uses the OSD_WARN element rather than a separate separate screen before arming.  The "BEACON ON" message will appear for the first 0.5 seconds and then "AM IN x.y" will countdown for the remaining delay.
+    
+    Also fixed OSD_WARN element blinking related to battery warnings to only blink the warning element if the battery warnings are actually configured.
+
+[33mcommit 843a25903a8625dc7e5d82eb65e8c09c9ddc574c[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Tue Jun 12 20:04:06 2018 -0400
+
+    Display OSD message and countdown if arming is delayed due to beacon
+    Provides a clear indication that arming is delayed for cases where DSHOT beacon is active.
+    
+    Clears the OSD and displays "DISABLING BEACON" and "ARMING IN X.Y" with an active countdown in tenths of a second while arming is delayed due to DSHOT beacon. Once delay period is over the normal "ARMING" message appears.
+    
+    If the DSHOT beacon is not active then this delay screen is not displayed.
+
+[33mcommit fa24697df6ea09c2aa8df6668e9adb2ffeeae4c2[m
+Author: mikeller <github@ike.ch>
+Date:   Sun Jun 3 22:43:12 2018 +1200
+
+    Make it terminate the string properly.
+
+[33mcommit 0aba86ccb41f491dc9ea87c6642fe455ddf43612[m
+Author: mikeller <github@ike.ch>
+Date:   Sun Jun 3 22:40:01 2018 +1200
+
+    Converted it to fixed width.
+
+[33mcommit e30f1fadd945e7ad34a5d4497119adf5358505b9[m
+Author: mikeller <github@ike.ch>
+Date:   Sun Jun 3 17:29:48 2018 +1200
+
+    Fixed OSD altitude display for negative altitude > -1.
+
+[33mcommit 07dfbd7b62b36cdf2ccbf2521218c2c6ccfdb120[m
+Merge: d330ad5 6eea0d4
+Author: Michael Keller <github@ike.ch>
+Date:   Thu May 31 10:59:32 2018 +1200
+
+    Merge pull request #6001 from mikeller/make_rssi_scalable
+    
+    Make all RSSI sources scalable.
+
+[33mcommit d401e3bbbeaa0cbdb88c53178a0f27d1e93fca4d[m
+Author: mikeller <github@ike.ch>
+Date:   Tue May 29 23:08:26 2018 +1200
+
+    Fix usages, scaling.
+
+[33mcommit 012058a9bca2e6231a15b51b45f5becfe7daa83a[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Mon May 28 17:47:03 2018 -0400
+
+    Reduce flash usage in OSD element display logic
+    Saves 132 bytes of flash.
+
+[33mcommit a6d667eb489572f5249aa494305a71cb83434bef[m
+Merge: 5c3599a 88b6751
+Author: Michael Keller <github@ike.ch>
+Date:   Sun May 27 21:38:51 2018 +1200
+
+    Merge pull request #5980 from mikeller/add_osd_core_temperature_warning
+    
+    Added warning for core temperature to OSD.
+
+[33mcommit 041bfb22c607b9d292cdd554648e27f50333a9d3[m
+Author: jflyper <shinoda@jaist.ac.jp>
+Date:   Fri May 25 11:01:49 2018 +0900
+
+    Create a pg for rxConfig
+
+[33mcommit 88b6751c91a66f5634beaf71cb538e0a4e0f0417[m
+Author: mikeller <github@ike.ch>
+Date:   Sun May 27 01:28:27 2018 +1200
+
+    Added warning for core temperature to OSD.
+
+[33mcommit c3412225f532d759b0c05a25daea57784a54eb13[m
+Author: Diego Basch <dbasch@gmail.com>
+Date:   Mon May 21 11:35:40 2018 -0700
+
+    Fix GPS Rescue (needs yaw smoothing but works).
+
+[33mcommit 0916d117b87e3a4e63f2ecb1e6e09c791c4e76b1[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Mon May 7 18:23:25 2018 -0400
+
+    Add OSD warning options as cli parameters
+    Previously only a single bitmapped parameter was available in the cli but this wasn't very useful as the users would have to understand the bit positions to enable/disable warning options. This change exposes each warning item as a separate parameter.
+
+[33mcommit 7e6ba60d7dbbb75493b2a21703064511ed53801a[m
+Merge: 0363a06 5687e66
+Author: Michael Keller <github@ike.ch>
+Date:   Sat May 12 12:00:34 2018 +1200
+
+    Merge pull request #5831 from etracer65/osd_stats_reorder
+    
+    Changes to support enhancements to BFC for OSD stats field ordering
+
+[33mcommit 5687e66f45d8888aea35763939f8cb9ea0ab9736[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Sat May 5 18:37:16 2018 -0400
+
+    Changes to support enhancements to BFC for OSD stats field ordering
+    Reorder the stats field enumeration to match the actual on-screen display order. Needed to support changes in the configurator so that it will also disply the selections in the same order.
+    
+    Going forward if there are any changes to the on-screen display order of the post-flight statistics then the enumeration must be updated to match.
+
+[33mcommit ca64074a123eaa5b8763153debb17daad0f97685[m
+Author: Miguel Angel Mulero Martinez <migmul@gmail.com>
+Date:   Tue May 8 13:17:26 2018 +0200
+
+    Fix OSD GPS Lat and Lon symbols
+
+[33mcommit 905f14d86cbbab1052ba05d9e162765b8696bf65[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Mon May 7 08:40:16 2018 -0400
+
+    Change enabled OSD stats storage to bitmap
+    Previously the flags controlling the enabled OSD stats were stored as an array of boolean. This change reduces config storage by storing the flags as bits inside a single uint32.
+
+[33mcommit 2f2c95a556df3fa1708ebcbd48262528f68ed7b2[m
+Merge: 851ed5f b2e43ab
+Author: Michael Keller <github@ike.ch>
+Date:   Mon May 7 21:26:38 2018 +1200
+
+    Merge pull request #5686 from pulquero/antigrav_osd
+    
+    Display anti-gravity activity in OSD.
+
+[33mcommit b2e43abf2d889fddf480ed7569fe9d3908b3c940[m
+Author: Mark Hale <mark.hale@physics.org>
+Date:   Thu Apr 5 17:49:53 2018 +0100
+
+    Display anti-gravity activity in OSD.
+    
+    Signed-off-by: Mark Hale <mark.hale@physics.org>
+
+[33mcommit d242de87bdac5fccef41d5ada6c7ac22222949ee[m
+Merge: 3e27854 c46be03
+Author: Michael Keller <github@ike.ch>
+Date:   Sat May 5 12:48:29 2018 +1200
+
+    Merge pull request #5764 from dbasch/gps_rescue
+    
+    [GPS RESCUE] added gps for altitude estimation
+
+[33mcommit c46be0304794437cca63fdb6db941e80dbe788b2[m
+Author: Diego Basch <dbasch@gmail.com>
+Date:   Tue Apr 24 11:11:35 2018 -0700
+
+    added gps for altitude estimation, remove most unused code, rename altitude.c to position.c, add hdop to nmea
+
+[33mcommit 809c2a950bb10ade33968f6e646e08dd8a21f55b[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Tue Apr 24 18:31:41 2018 -0400
+
+    Update RPM data in smartport and frsky_hub telemetry
+    Both previously displayed eRPM.  frsky_hub RPM data is constrained to int16 so the value sent is RPM/10.
+    
+    Updates per review and function renaming
+
+[33mcommit 063f3829d4c9a0a8cc733c8dc129968673c68c71[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Tue Apr 24 14:38:36 2018 -0400
+
+    Display ESC telemetry as real RPM in the OSD
+    The telemetry data provides eRPM/100.  Added a `motor_poles` parameter (defaulting to 14) that is used to calculate the physical RPM.
+    
+    RPM = (telemetry_rpm * 100) / (motor_poles / 2)
+    
+    Most motors we commonly use are 14 poles, but the user can adjust if needed for their setup.
+    
+    Also calculate actual RPM for DEBUG_ESC_SENSOR_RPM, but to fit with in int16 the log value will be RPM/10.
+
+[33mcommit f0ea0e81d46a9e13627a0f4ed053f41e62cb7cfc[m
+Merge: 75f82c7 c10e5b8
+Author: Michael Keller <github@ike.ch>
+Date:   Fri May 4 21:11:49 2018 +1200
+
+    Merge pull request #5765 from etracer65/gps_speed_units
+    
+    Fix GPS speed and max speed to respect the units selection
+
+[33mcommit 7e8bd7bb344c6331be8fd0e22e7b158829039d18[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Tue May 1 14:06:49 2018 -0400
+
+    Default OSD ESC current alarm to off
+    The osd_esc_current_alarm was added but never assigned a default value. Therefore it defaulted to 0 instead of off (-1).  This resulted in OSD warnings if the ESCs weren't providing current data as the test looked for values >= the warning setting.
+
+[33mcommit a9f74cd6df0748e9e90c7507775f254f03cac8c3[m
+Author: blckmn <blackman@xtra.com.au>
+Date:   Wed Apr 25 20:58:00 2018 +1000
+
+    Removed excess trailing spaces before new lines on licenses.
+
+[33mcommit 8c24176d966420d9230b2a52f6ea9403af6b38cb[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Tue Apr 24 16:41:45 2018 -0400
+
+    Fix GPS speed and max speed to respect the units selection
+    Previously GPS speed and max speed would always display in KPH even if the user chose imperial units.  Now they will display in MPH for imperial units.
+
+[33mcommit 46fe22b4bd9ed8bfbe01b0dc5c55bcd3c53d3ff8[m
+Author: blckmn <blackman@xtra.com.au>
+Date:   Sun Apr 22 09:22:46 2018 +1000
+
+    Direct license replacement
+
+[33mcommit a86aaeebd19cf2428031403f27daf66e0cb7d5d6[m
+Author: pulquero <mj_hale@yahoo.com>
+Date:   Tue Apr 17 13:25:36 2018 +0100
+
+    Improve ESC warning message and include current threshold check. (#5685)
+    
+    Signed-off-by: Mark Hale <mark.hale@physics.org>
+
+[33mcommit 07cce64572f7f575a28c06e0cb71cf3b9b629082[m
+Author: Michael Keller <github@ike.ch>
+Date:   Wed Apr 4 01:04:18 2018 +1200
+
+    Added ESC temperature warning, fixed ESC warning issue with motor count > 8. (#5583)
+
+[33mcommit cf6b3639e29ca82b3e9e79beb7e9f00ef175c590[m
+Author: pulquero <mj_hale@yahoo.com>
+Date:   Fri Mar 30 14:09:33 2018 +0100
+
+    Add OSD message to report motor/esc problem. (#5550)
+    
+    Signed-off-by: Mark Hale <mark.hale@physics.org>
+
+[33mcommit 3a8901daa8b6079cdcffa0b7fd1fba6e66e8b80b[m
+Author: Michael Keller <github@ike.ch>
+Date:   Mon Mar 26 20:53:12 2018 +1300
+
+    Added assertion about OSD warning field size. (#5533)
+
+[33mcommit d6af4c2d6bc9963140df5f2916ec6142d42a1e88[m
+Author: Michael Keller <github@ike.ch>
+Date:   Mon Mar 26 10:46:46 2018 +1300
+
+    Fixed blinking of OSD RSSI element. (#5542)
+
+[33mcommit 9edce2359a62cd56fa9787114df84868b7436843[m
+Author: etracer65 <github@etracer.net>
+Date:   Sat Mar 24 20:56:25 2018 -0400
+
+    Add current battery voltage as an option for the OSD stats page (#5531)
+    
+    Allows the user to configure a new OSD stat item called "BATTERY" that will display a live and updating battery voltage. This would allow the user to see how their battery was recovering after disarming by comparing to the stat "END BATTERY".
+
+[33mcommit 0c7ae494646711618ae3aae1e58292791c9ac937[m
+Author: etracer65 <github@etracer.net>
+Date:   Sat Mar 24 01:03:43 2018 -0400
+
+    Fix OSD stats not clearing when entering OSD menu (#5522)
+    
+    The pitch stick high can be used to clear the OSD stats screen, but it's also part of the sequence to enter the OSD menu. Entering the OSD menu from the stats page should have cleared the stats, but because of a race condition they weren't always cleared and the OSD menu would draw on top of the stats.  Changed the logic to ensure that if the OSD menu is entered the stats page is exited and cleared.
+
+[33mcommit 6b1336a940342660ff57389cdfa0225b698f6ea2[m
+Author: etracer65 <github@etracer.net>
+Date:   Tue Mar 20 07:21:08 2018 -0400
+
+    Make OSD stats page follow the state of the OSD disable switch mode (#5463)
+    
+    Previously the OSD stats would always display even if the OSD disable switch mode was active.
+    
+    Additionally, since the OSD stats page must now be dynamically refreshed rather than only rendered once at disarm, "live" stats like RTC clock and the timer "ON TIME" continue to update and display current information.  All other stats related to the previous flight remain static as of the disarming.
+
+[33mcommit 509d386f14447821f5e693e64ddbeff2b0fe54e2[m
+Author: Michael Keller <github@ike.ch>
+Date:   Thu Mar 15 02:40:09 2018 +1300
+
+    Merge pull request #3030 from cleanflight/fix-osd-vtx-power (#5423)
+    
+    Fix OSD VTX power display.  Only one character for the power is needed.
+
+[33mcommit 27bc23c3bb38d9b186e1e6249afbf3a082d78e15[m
+Author: etracer65 <github@etracer.net>
+Date:   Wed Mar 14 09:04:16 2018 -0400
+
+    Suppress OSD stats screen if runaway takeoff triggered the disarm (#5402)
+    
+    and OSD_WARNINGS is visible in the OSD.
+    
+    The stats screen was preventing the user from knowing that a disarm might be casued by runaway takeoff.  If the warnings element is visible it will have the message "RUNAWAY" but the disarm it triggers caused the stats display to replace the screen.
+    
+    The change prevents the stats page from displaying if the ARMING_DISABLED_RUNAWAY_TAKEOFF flag is set and the OSD_WARNINGS element is visible.  Otherwise the stats screen is displayed as normal.
+
+[33mcommit 35f5e5025f8d86471d96afbd263da3421c3f10bf[m
+Author: etracer65 <github@etracer.net>
+Date:   Mon Mar 12 16:31:52 2018 -0400
+
+    Fix OSD "DISARMED" blanking the display when armed (#5384)
+    
+    Changed the logic so that if currently armed and the previous arming state was disarmed, then blank out the message for just this single iteration. This should allow any elements behind to be properly displayed when armed.
+
+[33mcommit 66dac7a2e3505b390d00445bdc3643e230bd3791[m
+Author: Dan Nixon <dan@dan-nixon.com>
+Date:   Sat Mar 3 22:46:39 2018 +0000
+
+    Positionable OSD crosshairs and AHI (#5326)
+    
+    * Make Artificial horizon and crosshairs positionable
+    
+    * Remove dependency on AHI for AHI sidebars
+    
+    * Use the old fixed positions as defaults for some OSD elements
+    
+    Namely:
+    - crosshairs
+    - artificial horizon
+    - artificial horizon sidebars
+
+[33mcommit 6560e96e9827d780ceb35ed5ddd5b8f3b24835f0[m
+Author: Michael Keller <github@ike.ch>
+Date:   Sun Mar 4 11:43:46 2018 +1300
+
+    Fixed inconsistency in OSD code. (#5223)
+
+[33mcommit c11d016bc7991923834157654b0e73c2e42921d1[m
+Author: Petr Ledvina <ledvinap@gmail.com>
+Date:   Sat Mar 3 13:26:33 2018 +0100
+
+    optimize math (#5287)
+    
+    * optimize math
+    
+    Results in considerable flash saving
+    
+    * log_approx, exp_approx, pow_approx
+    
+    Taken from https://github.com/jhjourdan/SIMD-math-prims/blob/master/simd_math_prims.h
+    
+    * Fix pow in rangefinder
+    
+    * Use approximate function in baro calculation
+    
+    Maximum error is < 20cm
+    
+    * fixup! Fix pow in rangefinder
+
+[33mcommit c89f87018ba255986cb504ab71d40227ce6152e2[m
+Author: mikeller <github@ike.ch>
+Date:   Fri Feb 23 00:46:16 2018 +1300
+
+    Fixed OSD warnings overlap to the right.
+
+[33mcommit 4185756bafc3cac3be47d6a98dcd461625137c4a[m
+Author: Bruce Luckcuck <github@etracer.net>
+Date:   Wed Feb 21 07:12:01 2018 -0500
+
+    Change crash-flip OSD message to track actual state rather than switch
+    
+    Previously the OSD crash-flip warning would only track the state of the activation switch.  So if the switch was disabled but still armed the message would go away, but the quad was still in active crash-flip mode until it was disarmed.  This change makes the OSD message follow the actual internal state for crash-flip.
+
+[33mcommit 8db70252ddd9961b64a1fdfd66fbdaf31c756b34[m
+Author: mikeller <github@ike.ch>
+Date:   Sun Feb 18 13:14:56 2018 +1300
+
+    Fixed problem with craft name overwriting elements in OSD.
+
+[33mcommit d75b1f71c3ecc692c76542758ca9aac2a1341ea2[m
+Author: Diego Basch <dbasch@The-Pro-13.local>
+Date:   Sat Feb 10 08:29:13 2018 -0800
+
+    Fix for #5117. GPS coordinates no longer require special fonts to render the decimal separator.
+    Removed the code that used leading and trailing half-dots, now using a regular dot instead.
+    Also fixed the maximum length of the coordinate string, as the 7th decimal digit was getting clobbered in longitudes with three digits (the count was off by one).
+
+[33mcommit e2683cd2dcaa7d87487eb3d40856fbd831f4b56a[m
+Author: Martin Budden <mjbudden@gmail.com>
+Date:   Thu Feb 1 09:24:57 2018 +0000
+
+    Corrected VTX vtables to not use static device handle
+
+[33mcommit e7cac0e9c6090b09a515b7450c6890c63aba3f01[m
+Author: Martin Budden <mjbudden@gmail.com>
+Date:   Sun Jan 21 13:45:22 2018 +0000
+
+    Always use arming disable flag names
+
+[33mcommit ed42d59c9474c08b4dd97db0ca36fcb984a53ff7[m
+Author: Dan Nixon <dan@dan-nixon.com>
+Date:   Sun Jan 14 20:56:40 2018 +0000
+
+    Add temperature conversion for ESC temp, tidy formatting
+
+[33mcommit 52d45ff72b81b9307949b3649adef745d5efb1f5[m
+Author: Dan Nixon <dan@dan-nixon.com>
+Date:   Sat Jan 13 13:00:01 2018 +0000
+
+    Add temperature unit conversion
+    
+    Selects unit based on OSD unit system setting: metric is degC and
+    imperial is degF.
+
+[33mcommit f8e4d02c991b2ff831429ce5acba870b70025471[m
+Author: Dan Nixon <dan@dan-nixon.com>
+Date:   Wed Jan 10 18:21:50 2018 +0000
+
+    Add core (MCU) temperature to OSD
+
+[33mcommit e6f5926131ffbfc86a1fbbabaad2be9b8e551675[m
+Author: Martin Budden <mjbudden@gmail.com>
+Date:   Mon Jan 8 17:12:58 2018 +0000
+
+    Prepare OSD for iterative updating
+
+[33mcommit 385623bd9dd26c17f48eef0fa0fb747d39fdc713[m
+Author: mikeller <github@ike.ch>
+Date:   Tue Jan 9 17:34:34 2018 +1300
+
+    Converted defines for `VTX_COMMON`, `VTX_CONTROL`, `VTX_RTC6705`, `VTX_RTC6705SOFTSPI`, `VTX_TRAMP`, `VTX_SMARTAUDIO` to use `USE_` prefix.
+
+[33mcommit 09d396c05cacd3cbb26fb689f60c604089139af0[m
+Author: mikeller <github@ike.ch>
+Date:   Sun Nov 19 13:41:48 2017 +1300
+
+    Cleaned up parameter group handling.
+    
+    Fixed missing include.
+
+[33mcommit d82c72bc54a2bd58bc14673131e3545cceca213c[m
+Author: mikeller <github@ike.ch>
+Date:   Sun Dec 24 11:45:19 2017 +1300
+
+    Moved sdcard parameter group to `pg/`.
+
+[33mcommit b489d0ba9de4be577320940cdb83a38ec916a9db[m
+Author: mikeller <github@ike.ch>
+Date:   Tue Dec 19 23:36:31 2017 +1300
+
+    Renamed 'parameter_group' to 'pg'.
+
+[33mcommit 6e5ad5d210e6a27197ec3cb5edb47a29adf20506[m
+Author: atomiclama <atomiclama

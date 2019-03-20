@@ -64,6 +64,10 @@
 #include "sensors/battery.h"
 #include "sensors/gyro.h"
 
+#ifdef USE_SERIALSHOT
+#include "io/serial_shot.h"
+#endif
+
 PG_REGISTER_WITH_RESET_TEMPLATE(mixerConfig_t, mixerConfig, PG_MIXER_CONFIG, 0);
 
 #ifndef TARGET_DEFAULT_MIXER
@@ -374,6 +378,9 @@ void initEscEndpoints(void)
     // Can't use 'isMotorProtocolDshot()' here since motors haven't been initialised yet
     switch (motorConfig()->dev.motorPwmProtocol) {
 #ifdef USE_DSHOT
+#ifdef USE_SERIALSHOT
+    case PWM_TYPE_SERIALSHOT:
+#endif
     case PWM_TYPE_PROSHOT1000:
     case PWM_TYPE_DSHOT1200:
     case PWM_TYPE_DSHOT600:
@@ -514,7 +521,9 @@ void writeMotors(void)
         for (int i = 0; i < motorCount; i++) {
             pwmWriteMotor(i, motor[i]);
         }
+#ifndef USE_SERIALSHOT             
         pwmCompleteMotorUpdate(motorCount);
+#endif        
     }
 }
 

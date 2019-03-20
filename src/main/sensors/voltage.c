@@ -42,6 +42,9 @@
 
 const char * const voltageMeterSourceNames[VOLTAGE_METER_COUNT] = {
     "NONE", "ADC", "ESC"
+#ifdef USE_SERIALSHOT
+    ,"SERIALSHOT"
+#endif    
 };
 
 const uint8_t voltageMeterIds[] = {

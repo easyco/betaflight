@@ -29,6 +29,9 @@ typedef enum {
     CURRENT_METER_VIRTUAL,
     CURRENT_METER_ESC,
     CURRENT_METER_MSP,
+#ifdef USE_SERIALSHOT
+    CURRENT_METER_SERIALSHOT,
+#endif       
     CURRENT_METER_COUNT
 } currentMeterSource_e;
 

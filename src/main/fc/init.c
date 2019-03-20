@@ -163,6 +163,10 @@
 #include "build/build_config.h"
 #include "build/debug.h"
 
+#ifdef USE_SERIALSHOT
+#include "io/serial_shot.h"
+#endif
+
 #ifdef TARGET_PREINIT
 void targetPreInit(void);
 #endif
@@ -696,6 +700,10 @@ void init(void)
     {
         vtxRTC6705Init();
     }
+#endif
+
+#ifdef USE_SERIALSHOT
+    //serialShotInit();
 #endif
 
 #endif // VTX_CONTROL

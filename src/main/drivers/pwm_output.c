@@ -31,6 +31,10 @@
 #include "timer.h"
 #include "drivers/pwm_output.h"
 
+#ifdef USE_SERIALSHOT
+#include "io/serial_shot.h"
+#endif
+
 static FAST_RAM_ZERO_INIT pwmWriteFn *pwmWrite;
 static FAST_RAM_ZERO_INIT pwmOutputPort_t motors[MAX_SUPPORTED_MOTORS];
 static FAST_RAM_ZERO_INIT pwmCompleteWriteFn *pwmCompleteWrite = NULL;
@@ -64,6 +68,9 @@ static uint16_t freqBeep = 0;
 
 static bool pwmMotorsEnabled = false;
 static bool isDshot = false;
+#ifdef USE_SERIALSHOT
+static bool isSerialShot = false;
+#endif
 #ifdef USE_DSHOT_DMAR
 FAST_RAM_ZERO_INIT bool useBurstDshot = false;
 #endif
@@ -235,13 +242,28 @@ void pwmCompleteMotorUpdate(uint8_t motorCount)
 void motorDevInit(const motorDevConfig_t *motorConfig, uint16_t idlePulse, uint8_t motorCount)
 {
     memset(motors, 0, sizeof(motors));
-
     bool useUnsyncedPwm = motorConfig->useUnsyncedPwm;
 
     float sMin = 0;
     float sLen = 0;
     switch (motorConfig->motorPwmProtocol) {
     default:
+#ifdef USE_SERIALSHOT
+    case PWM_TYPE_SERIALSHOT:
+        UNUSED(idlePulse);
+        
+        serialShotInit();
+        pwmWrite = &pwmWriteSerialShot;
+        isDshot = true;
+        isSerialShot = true;
+
+        for (int motorIndex = 0; motorIndex < MAX_SUPPORTED_MOTORS && motorIndex < motorCount; motorIndex++) {
+            motors[motorIndex].enabled = true;
+        }
+
+        pwmMotorsEnabled = true;
+        return;
+#endif    
     case PWM_TYPE_ONESHOT125:
         sMin = 125e-6f;
         sLen = 125e-6f;
@@ -370,6 +392,13 @@ bool isMotorProtocolDshot(void)
     return isDshot;
 }
 
+#ifdef USE_SERIALSHOT
+bool isMotorProtocolSerialShot(void)
+{
+    return isSerialShot;
+}
+#endif
+
 #ifdef USE_DSHOT
 uint32_t getDshotHz(motorPwmProtocolTypes_e pwmProtocolType)
 {
@@ -415,6 +444,12 @@ void pwmWriteDshotCommand(uint8_t index, uint8_t motorCount, uint8_t command, bo
 {
     timeUs_t timeNowUs = micros();
 
+#ifdef USE_SERIALSHOT
+    if (isMotorProtocolSerialShot() && (command < SERIALSHOT_CMD_MAX)) {
+        serialShotWriteCommand(index, (serialShotCommands_e)command);
+        return;
+    }
+#endif    
     if (!isMotorProtocolDshot() || (command > DSHOT_MAX_COMMAND) || pwmDshotCommandIsQueued()) {
         return;
     }
