@@ -17,7 +17,6 @@
  *
  * If not, see <http://www.gnu.org/licenses/>.
  */
-//#if defined (USE_USARTSHOT)
 
 #pragma once
 
