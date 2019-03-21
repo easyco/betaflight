@@ -91,6 +91,9 @@ typedef enum {
     PWM_TYPE_DSHOT1200,
     PWM_TYPE_PROSHOT1000,
 #endif
+#ifdef USE_SERIALSHOT
+    PWM_TYPE_SERIALSHOT,
+#endif    
     PWM_TYPE_MAX
 } motorPwmProtocolTypes_e;
 
@@ -230,6 +233,9 @@ void servoDevInit(const servoDevConfig_t *servoDevConfig);
 void pwmServoConfig(const struct timerHardware_s *timerHardware, uint8_t servoIndex, uint16_t servoPwmRate, uint16_t servoCenterPulse);
 
 bool isMotorProtocolDshot(void);
+#ifdef USE_SERIALSHOT
+bool isMotorProtocolSerialShot(void);
+#endif
 
 #ifdef USE_DSHOT
 typedef uint8_t loadDmaBufferFn(uint32_t *dmaBuffer, int stride, uint16_t packet);  // function pointer used to encode a digital motor value into the DMA buffer representation
