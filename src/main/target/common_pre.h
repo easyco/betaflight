@@ -53,8 +53,8 @@
 #define USE_FAST_RAM
 #endif
 #define USE_DSHOT
-#define USE_DSHOT_TELEMETRY
-#define USE_RPM_FILTER
+//#define USE_DSHOT_TELEMETRY
+//#define USE_RPM_FILTER
 #define I2C3_OVERCLOCK true
 #define USE_GYRO_DATA_ANALYSE
 #define USE_ADC

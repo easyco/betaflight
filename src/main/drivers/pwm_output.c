@@ -282,6 +282,7 @@ void motorDevInit(const motorDevConfig_t *motorConfig, uint16_t idlePulse, uint8
         
         serialShotInit();
         pwmWrite = &pwmWriteSerialShot;
+        pwmCompleteWrite = &pwmCompleteWriteUnused;
         isDshot = true;
         isSerialShot = true;
 
@@ -514,6 +515,13 @@ static dshotCommandControl_t* addCommand()
 void pwmWriteDshotCommand(uint8_t index, uint8_t motorCount, uint8_t command, bool blocking)
 {
     timeUs_t timeNowUs = micros();
+
+#ifdef USE_SERIALSHOT
+    if (isMotorProtocolSerialShot() && (command < SERIALSHOT_CMD_MAX)) {
+        serialShotWriteCommand(index, (serialShotCommands_e)command);
+        return;
+    }
+#endif    
 
     if (!isMotorProtocolDshot() || (command > DSHOT_MAX_COMMAND) || pwmDshotCommandQueueFull()) {
         return;

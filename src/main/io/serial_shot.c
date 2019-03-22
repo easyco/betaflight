@@ -23,7 +23,7 @@
 
 #include "platform.h"
 
-#ifdef USE_SERIALSHOT
+//#ifdef USE_SERIALSHOT
 
 #include "io/serial_shot.h"
 #include "io/serial.h"
@@ -133,7 +133,9 @@ bool serialShotInit(void)
         rxCnt = 0;
         rxBuffer[0] = 0;
 
-        serialShotPort = openSerialPort(portConfig->identifier, FUNCTION_SERIALSHOT, serialShotReceive, NULL, \
+        serialShotPort = openSerialPort(portConfig->identifier, FUNCTION_SERIALSHOT, NULL, NULL, \
+        SERIALSHOT_UART_BAUD, MODE_TX, portOptions);
+        //serialShotPort = openSerialPort(portConfig->identifier, FUNCTION_SERIALSHOT, serialShotReceive, NULL, \
         SERIALSHOT_UART_BAUD, MODE_RXTX, portOptions);
     }
 
@@ -167,5 +169,5 @@ FAST_CODE void pwmWriteSerialShot(uint8_t index, float value)
     }
 }
 
-#endif
+//#endif
 
