@@ -30,6 +30,9 @@ typedef enum {
     VOLTAGE_METER_NONE = 0,
     VOLTAGE_METER_ADC,
     VOLTAGE_METER_ESC,
+#ifdef USE_SERIALSHOT
+    VOLTAGE_METER_SERIALSHOT,
+#endif      
     VOLTAGE_METER_COUNT
 } voltageMeterSource_e;
 

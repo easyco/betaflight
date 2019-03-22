@@ -76,7 +76,7 @@ uint8_t serialShotGetTemperature(void)
 
 uint16_t serialShotGetVoltage(void)
 {
-    return escData.voltage / 10;
+    return escData.voltage;
 }
 
 uint16_t serialShotGetCurrent(void)
@@ -133,10 +133,8 @@ bool serialShotInit(void)
         rxCnt = 0;
         rxBuffer[0] = 0;
 
-        serialShotPort = openSerialPort(portConfig->identifier, FUNCTION_SERIALSHOT, NULL, NULL, \
-        SERIALSHOT_UART_BAUD, MODE_TX, portOptions);
-        //serialShotPort = openSerialPort(portConfig->identifier, FUNCTION_SERIALSHOT, serialShotReceive, NULL, \
-        SERIALSHOT_UART_BAUD, MODE_RXTX, portOptions);
+        serialShotPort = openSerialPort(portConfig->identifier, FUNCTION_SERIALSHOT, serialShotReceive, NULL, \
+                                        SERIALSHOT_UART_BAUD, MODE_RXTX, portOptions);
     }
 
     if (!serialShotPort) {

@@ -374,6 +374,9 @@ void initEscEndpoints(void)
 
     // Can't use 'isMotorProtocolDshot()' here since motors haven't been initialised yet
     switch (motorConfig()->dev.motorPwmProtocol) {
+#ifdef USE_SERIALSHOT
+    case PWM_TYPE_SERIALSHOT:
+#endif        
 #ifdef USE_DSHOT
     case PWM_TYPE_PROSHOT1000:
     case PWM_TYPE_DSHOT1200:
@@ -517,6 +520,7 @@ void mixerResetDisarmedMotors(void)
 void writeMotors(void)
 {
     if (pwmAreMotorsEnabled()) {
+//#if defined(USE_DSHOT) && defined(USE_DSHOT_TELEMETRY) && !defined(USE_SERIALSHOT)
 #if defined(USE_DSHOT) && defined(USE_DSHOT_TELEMETRY)
         pwmStartMotorUpdate(motorCount);
 #endif
