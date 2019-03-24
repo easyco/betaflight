@@ -32,40 +32,88 @@
 
 static serialPort_t *serialShotPort = NULL;
 
-static volatile uint8_t rxBuffer[ESC_DATA_FRAME_SIZE];
+static uint8_t rxBuffer[MAX_SERIALSHOT_TELEMETRY_FRAME_LENGTH];
 static volatile uint8_t rxCnt = 0;
+static volatile uint8_t telemetryLen = 0;
 static volatile escData_t escData;
 static uint8_t txBuffer[THROTTLE_DATA_FRAME_SIZE];
 static uint8_t escCommand[4];
+
+static uint8_t getCheckSum(uint8_t *buffer, uint8_t len)
+{
+    uint8_t sum = 0;
+    for (uint8_t i = 0; i < len; i++)
+    {
+        sum = (uint8_t)(sum + buffer[i]);
+    }
+    return sum;
+}
 
 // Receive ISR callback
 static void serialShotReceive(uint16_t c, void *data)
 {
     UNUSED(data);
 
-    if (((uint8_t)c == 0x88) && (rxBuffer[0] != 0x88))
-    {
-        rxCnt = 1;
-        rxBuffer[0] = 0x88;
+    if (rxBuffer[0] == 0) {
+        switch (c) {
+            case SERIALSHOT_TELEMETRY_ONLY_ERPM:
+                telemetryLen = 10;
+                rxBuffer[0] = (uint8_t)c;
+                rxCnt = 1;
+                break;
+        
+            case SERIALSHOT_TELEMETRY_TEMPERATURE:
+                telemetryLen = 11;
+                rxBuffer[0] = (uint8_t)c;
+                rxCnt = 1;
+                break;
+
+            case SERIALSHOT_TELEMETRY_VOLTAGE:
+            case SERIALSHOT_TELEMETRY_CURRENT:
+            case SERIALSHOT_TELEMETRY_MAH:
+                telemetryLen = 12;
+                rxBuffer[0] = (uint8_t)c;
+                rxCnt = 1;
+                break;
+
+            default:
+                break;
+        }
     }
-    else
-    {
+    else {
         rxBuffer[rxCnt++] = (uint8_t)c;
         
-        if (rxCnt == ESC_DATA_FRAME_SIZE)
-        {
-            rxCnt = 0;
+        if (rxCnt < telemetryLen) return;
+        if (rxBuffer[rxCnt - 1] != getCheckSum(rxBuffer, telemetryLen - 1)) {
             rxBuffer[0] = 0;
-            
-            escData.temperature = rxBuffer[1];
-            escData.voltage     = ((uint16_t)rxBuffer[2] << 8) | rxBuffer[3];
-            escData.current     = ((uint16_t)rxBuffer[4] << 8) | rxBuffer[5];
-            escData.consumption = ((uint16_t)rxBuffer[6] << 8) | rxBuffer[7];
-            for (uint8_t i = 0; i < 4; i++)
-            {
-                escData.erpm[i] = ((uint16_t)rxBuffer[8 + 2*i] << 8) | rxBuffer[9 + 2*i];
-            }    
+            return;
         }
+
+        for (uint8_t i = 0; i < 4; i++) {
+            escData.erpm[i] = ((uint16_t)rxBuffer[1 + 2 * i] << 8) | rxBuffer[2 + 2 * i];
+        }
+
+        switch (rxBuffer[0]) {
+        case SERIALSHOT_TELEMETRY_TEMPERATURE:
+            escData.temperature = rxBuffer[9];
+            break;
+
+        case SERIALSHOT_TELEMETRY_VOLTAGE:
+            escData.voltage = ((uint16_t)rxBuffer[9] << 8) | rxBuffer[10];
+            break;
+
+        case SERIALSHOT_TELEMETRY_CURRENT:
+            escData.current = ((uint16_t)rxBuffer[9] << 8) | rxBuffer[10];
+            break;
+
+        case SERIALSHOT_TELEMETRY_MAH:
+            escData.consumption = ((uint16_t)rxBuffer[9] << 8) | rxBuffer[10];
+            break;
+
+        default:
+            break;
+        }
+        rxBuffer[0] = 0;
     }
 }
 
@@ -94,16 +142,9 @@ uint16_t serialShotGetAverageErpm(void)
     return (escData.erpm[0] + escData.erpm[1] + escData.erpm[2] + escData.erpm[3]) / 4;
 }
 
-void serialShotMeterReset(void)
+uint16_t serialShotGetErpm(uint8_t motorIndex)
 {
-    escData.voltage = 0;
-    escData.current = 0;
-    escData.temperature = 0;
-    escData.consumption = 0;
-    for (uint8_t i = 0; i < 4; i++)
-    {
-        escData.erpm[i] = 0;
-    }
+    return escData.erpm[motorIndex];
 }
 
 void serialShotWriteCommand(uint8_t motorIndex, serialShotCommands_e command)

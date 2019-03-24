@@ -45,6 +45,9 @@
 #include "pwm_output.h"
 
 #include "pwm_output_dshot_shared.h"
+#ifdef USE_SERIALSHOT
+#include "io/serial_shot.h"
+#endif
 
 FAST_RAM_ZERO_INIT uint8_t dmaMotorTimerCount = 0;
 #ifdef STM32F7
@@ -205,6 +208,13 @@ FAST_CODE void pwmDshotSetDirectionOutput(
 
 void pwmStartDshotMotorUpdate(uint8_t motorCount)
 {
+#ifdef USE_SERIALSHOT
+    for (uint8_t n = 0; n < 4; n++) {
+        dmaMotors[n].dshotTelemetryValue = serialShotGetErpm(n);
+        dmaMotors[n].dshotTelemetryActive = true;
+    }
+    return;
+#endif    
     if (useDshotTelemetry) {
         for (int i = 0; i < motorCount; i++) {
             if (dmaMotors[i].hasTelemetry) {

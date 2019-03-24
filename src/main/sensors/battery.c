@@ -142,7 +142,7 @@ void batteryUpdateVoltage(timeUs_t currentTimeUs)
         case VOLTAGE_METER_SERIALSHOT:
             voltageMeter.filtered = serialShotGetVoltage();
             voltageMeter.unfiltered = voltageMeter.filtered;
-            serialShotMeterReset();
+            //serialShotMeterReset();
             break;
 #endif
         default:

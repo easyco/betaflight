@@ -443,6 +443,9 @@ static void validateAndFixConfig(void)
 #if defined(USE_DSHOT_TELEMETRY)
     bool usingDshotProtocol;
     switch (motorConfig()->dev.motorPwmProtocol) {
+#ifdef USE_SERIALSHOT
+    case PWM_TYPE_SERIALSHOT:
+#endif        
     case PWM_TYPE_PROSHOT1000:
     case PWM_TYPE_DSHOT1200:
     case PWM_TYPE_DSHOT600:

@@ -283,6 +283,10 @@ void motorDevInit(const motorDevConfig_t *motorConfig, uint16_t idlePulse, uint8
         serialShotInit();
         pwmWrite = &pwmWriteSerialShot;
         pwmCompleteWrite = &pwmCompleteWriteUnused;
+#ifdef USE_DSHOT_TELEMETRY
+        pwmStartWrite = &pwmStartDshotMotorUpdate;
+        useDshotTelemetry = motorConfig->useDshotTelemetry;
+#endif
         isDshot = true;
         isSerialShot = true;
 
