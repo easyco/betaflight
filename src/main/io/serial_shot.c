@@ -22,7 +22,6 @@
 #include <math.h>
 
 #include "platform.h"
-
 //#ifdef USE_SERIALSHOT
 
 #include "io/serial_shot.h"
@@ -167,15 +166,11 @@ bool serialShotInit(void)
     }
 
     if (portConfig) {
-        portOptions_e portOptions = 0;
-
-        portOptions = SERIAL_UNIDIR;
-
         rxCnt = 0;
         rxBuffer[0] = 0;
 
-        serialShotPort = openSerialPort(portConfig->identifier, FUNCTION_SERIALSHOT, serialShotReceive, NULL, \
-                                        SERIALSHOT_UART_BAUD, MODE_RXTX, portOptions);
+        serialShotPort = openSerialPort(portConfig->identifier, FUNCTION_SERIALSHOT, NULL, NULL,
+                                        SERIALSHOT_UART_BAUD, MODE_RXTX, SERIAL_UNIDIR);
     }
 
     if (!serialShotPort) {

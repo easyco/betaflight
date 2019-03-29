@@ -156,7 +156,8 @@
 
 #define USE_SERIALSHOT
 #define SERIALSHOT_UART         SERIAL_PORT_USART1
-
+//#define USE_UART1_TX_DMA
+//#define USE_UART1_RX_DMA
 // *************** ADC *****************************
 #define USE_ADC
 #define ADC_INSTANCE         ADC1  // Default added
