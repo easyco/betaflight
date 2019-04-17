@@ -160,6 +160,8 @@
 #define SERIALRX_PROVIDER       SERIALRX_SBUS
 #define SERIALRX_UART           SERIAL_PORT_USART2
 
+#define USE_SERIALSHOT
+#define SERIALSHOT_UART         SERIAL_PORT_USART1
 // *************** ADC *****************************
 #define USE_ADC
 #define ADC_INSTANCE         ADC1  // Default added

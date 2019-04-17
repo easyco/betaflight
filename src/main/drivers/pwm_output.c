@@ -260,9 +260,9 @@ void pwmCompleteMotorUpdate(uint8_t motorCount)
 }
 
 #ifdef USE_DSHOT_TELEMETRY
-void pwmStartMotorUpdate(uint8_t motorCount)
+bool pwmStartMotorUpdate(uint8_t motorCount)
 {
-    pwmStartWrite(motorCount);
+    return pwmStartWrite(motorCount);
 }
 #endif
 

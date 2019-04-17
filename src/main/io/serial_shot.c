@@ -169,7 +169,7 @@ bool serialShotInit(void)
         rxCnt = 0;
         rxBuffer[0] = 0;
 
-        serialShotPort = openSerialPort(portConfig->identifier, FUNCTION_SERIALSHOT, NULL, NULL,
+        serialShotPort = openSerialPort(portConfig->identifier, FUNCTION_SERIALSHOT, serialShotReceive, rxBuffer,
                                         SERIALSHOT_UART_BAUD, MODE_RXTX, SERIAL_UNIDIR);
     }
 

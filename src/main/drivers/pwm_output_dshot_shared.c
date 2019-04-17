@@ -208,24 +208,18 @@ FAST_CODE void pwmDshotSetDirectionOutput(
 
 bool pwmStartDshotMotorUpdate(uint8_t motorCount)
 {
-<<<<<<< HEAD
 #ifdef USE_SERIALSHOT
     for (uint8_t n = 0; n < 4; n++) {
         dmaMotors[n].dshotTelemetryValue = serialShotGetErpm(n);
         dmaMotors[n].dshotTelemetryActive = true;
     }
-    return;
+    return true;
 #endif    
-    if (useDshotTelemetry) {
-        for (int i = 0; i < motorCount; i++) {
-            if (dmaMotors[i].hasTelemetry) {
-=======
     if (!useDshotTelemetry) {
         return true;
     }
     for (int i = 0; i < motorCount; i++) {
         if (dmaMotors[i].hasTelemetry) {
->>>>>>> master
 #ifdef STM32F7
             uint32_t edges = LL_EX_DMA_GetDataLength(dmaMotors[i].dmaRef);
 #else

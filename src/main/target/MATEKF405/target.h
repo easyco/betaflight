@@ -158,6 +158,7 @@
 #define SERIALSHOT_UART         SERIAL_PORT_USART1
 //#define USE_UART1_TX_DMA
 //#define USE_UART1_RX_DMA
+//#define UART1_RX_DMA_OPT        0
 // *************** ADC *****************************
 #define USE_ADC
 #define ADC_INSTANCE         ADC1  // Default added
@@ -180,5 +181,7 @@
 #define TARGET_IO_PORTC         0xffff
 #define TARGET_IO_PORTD         (BIT(2))
 
-#define USABLE_TIMER_CHANNEL_COUNT 12
-#define USED_TIMERS             (TIM_N(1)|TIM_N(2)|TIM_N(3)|TIM_N(4)|TIM_N(5)|TIM_N(8)|TIM_N(9))
+//#define USABLE_TIMER_CHANNEL_COUNT 12
+//#define USED_TIMERS             (TIM_N(1)|TIM_N(2)|TIM_N(3)|TIM_N(4)|TIM_N(5)|TIM_N(8)|TIM_N(9))
+#define USABLE_TIMER_CHANNEL_COUNT 5
+#define USED_TIMERS             (TIM_N(3)|TIM_N(5)|TIM_N(8))
