@@ -23,7 +23,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-//#define ESC_DATA_FRAME_SIZE         16
 #define THROTTLE_DATA_FRAME_SIZE    9
 #define SERIALSHOT_UART_BAUD        921600
 

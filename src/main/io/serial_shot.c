@@ -28,30 +28,29 @@
 #include "io/serial.h"
 
 #include "drivers/pwm_output.h"
+#include "common/crc.h"
 
+typedef struct __attribute__((packed)) {
+    uint8_t hdr;            // Header/version marker
+    uint8_t motorData[6];   // 12 bit per motor
+    uint8_t crc;            // CRC8/DVB-T of hdr & motorData
+}   serialShortPacket_t;
+
+static serialShortPacket_t txPkt;
 static serialPort_t *serialShotPort = NULL;
-
 static uint8_t rxBuffer[MAX_SERIALSHOT_TELEMETRY_FRAME_LENGTH];
 static volatile uint8_t rxCnt = 0;
 static volatile uint8_t telemetryLen = 0;
 static volatile escData_t escData;
-static uint8_t txBuffer[THROTTLE_DATA_FRAME_SIZE];
-static uint8_t escCommand[4];
 
-static uint8_t getCheckSum(uint8_t *buffer, uint8_t len)
-{
-    uint8_t sum = 0;
-    for (uint8_t i = 0; i < len; i++)
-    {
-        sum = (uint8_t)(sum + buffer[i]);
-    }
-    return sum;
-}
+static uint16_t txData[4];
+static uint8_t  escCmd[4];
 
 // Receive ISR callback
 static void serialShotReceive(uint16_t c, void *data)
 {
     UNUSED(data);
+    uint8_t crc;
 
     if (rxBuffer[0] == 0) {
         switch (c) {
@@ -83,7 +82,10 @@ static void serialShotReceive(uint16_t c, void *data)
         rxBuffer[rxCnt++] = (uint8_t)c;
         
         if (rxCnt < telemetryLen) return;
-        if (rxBuffer[rxCnt - 1] != getCheckSum(rxBuffer, telemetryLen - 1)) {
+
+        crc = crc8_dvb_s2(0x00, rxBuffer[0]);
+        crc = crc8_dvb_s2_update(crc, &rxBuffer[1], telemetryLen - 2);
+        if (rxBuffer[telemetryLen - 1] != crc) {
             rxBuffer[0] = 0;
             return;
         }
@@ -150,11 +152,11 @@ void serialShotWriteCommand(uint8_t motorIndex, serialShotCommands_e command)
 {
     if (motorIndex == ALL_MOTORS) {
         for (uint8_t i = 0; i < 4; i++) {
-            escCommand[i] = command;
+            escCmd[i] = command;
         }    
     }
     else {
-        escCommand[motorIndex] = command;
+        escCmd[motorIndex] = command;
     }    
 }
 
@@ -182,26 +184,23 @@ bool serialShotInit(void)
 
 FAST_CODE void pwmWriteSerialShot(uint8_t index, float value)
 {
-    uint8_t n = 2 * index;
-    uint16_t d = lrintf(value);
-    static uint8_t sum = 0;
+    txData[index] = lrintf(value) + escCmd[index];
 
-    d += escCommand[index];
-    escCommand[index] = 0;
-    
-    txBuffer[n] = (uint8_t)(d >> 8);
-    txBuffer[n + 1] = (uint8_t)d; 
-    
-    sum = (uint8_t)(sum + txBuffer[n]);
-    sum = (uint8_t)(sum + txBuffer[n + 1]);
-    
     if (index == 3)
     {
-        txBuffer[8] = sum;
-        sum = 0;
-        serialWriteBuf(serialShotPort, txBuffer, THROTTLE_DATA_FRAME_SIZE);
+        txPkt.hdr = 0x00;
+
+        txPkt.motorData[0] = txData[0] & 0x00FF;
+        txPkt.motorData[1] = txData[1] & 0x00FF;
+        txPkt.motorData[2] = txData[2] & 0x00FF;
+        txPkt.motorData[3] = txData[3] & 0x00FF;
+        txPkt.motorData[4] = (((txData[0] & 0xF00) >> 8) << 0) | (((txData[1] & 0xF00) >> 8) << 4);
+        txPkt.motorData[5] = (((txData[2] & 0xF00) >> 8) << 0) | (((txData[3] & 0xF00) >> 8) << 4);
+
+        txPkt.crc = crc8_dvb_s2(0x00, txPkt.hdr);
+        txPkt.crc = crc8_dvb_s2_update(txPkt.crc, txPkt.motorData, sizeof(txPkt.motorData));
+        
+        serialWriteBuf(serialShotPort, (const uint8_t *)&txPkt, sizeof(txPkt));
     }
 }
-
-//#endif
 
